@@ -25,33 +25,16 @@
            background-color: #343541;
     }   
     </style>
-<!-- Yandex Games SDK -->
-<script src="https://yandex.ru/games/sdk/v2"></script>
-<!-- Yandex.RTB -->
-    <script>window.yaContextCb=window.yaContextCb||[]</script>
-    <script src="https://yandex.ru/ads/system/context.js" async></script>
-        <script>
-        YaGames.init({
-            adv: {
-                 onAdvClose: wasShown => {
-                                console.info('adv closed!');
-                            }
-                        }
-                    })
-                        .then(ysdk => {
-                            ysdk.adv.showFullscreenAdv();
-                            window.ysdk = ysdk;
-                        });
-            
-                    function ShowAd() {
-                        window.ysdk.adv.showFullscreenAdv();
-        }
-        </script>
-  </head>
-  <body>
-    <div id="root"></div>
+    
+        <link href="http://gpt2.online/assets/chat/assets/index.css?v3.79" rel="stylesheet">
+</head>
+<body>
+<div class="page">
+    <div class="page__wrapper">
+            <div id="root"></div>
     <div id="modal-root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <!-- Yandex.Metrika counter -->
-  </body>
+    </div>
+</div>
+    <script type="module" crossorigin src="./index.js?v3.79"></script>
+</body>
 </html>
