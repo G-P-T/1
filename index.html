@@ -1644,6 +1644,7 @@
                 document.getElementById("voiceRec").style.display = "block";
                 inputAreaEle.classList.add("message_if_voice");
                 let langs = [ // from https://www.google.com/intl/en/chrome/demos/speech.html
+                    ['Pусский',          ['ru-RU']],
                     ['中文', ['cmn-Hans-CN', '普通话 (大陆)'],
                         ['cmn-Hans-HK', '普通话 (香港)'],
                         ['cmn-Hant-TW', '中文 (台灣)'],
@@ -1661,7 +1662,7 @@
                         ['en-ZA', 'South Africa'],
                         ['en-PH', 'Philippines']]
                 ];
-                if (locale !== "zh") langs = langs.reverse();
+                if (locale !== "ru") langs = langs.reverse();
                 langs.forEach((lang, i) => {
                     select_language.options.add(new Option(lang[0], i));
                     selectLangOption.options.add(new Option(lang[0], i))
@@ -1681,7 +1682,7 @@
                 };
                 let localLangIdx = 0;
                 let localDiaIdx = 0;
-                let localRecLang = localStorage.getItem("voiceRecLang") || "cmn-Hans-CN";
+                let localRecLang = localStorage.getItem("voiceRecLang") || "ru-RU";
                 if (localRecLang) {
                     let localIndex = langs.findIndex(item => {
                         let diaIdx = item.findIndex(lang => {return lang instanceof Array && lang[0] === localRecLang});
@@ -2170,7 +2171,7 @@
             let isOnline = existVoice >= 2;
             let voicesEle = document.getElementById("preSetSpeech");
             // 支持中文和英文
-            voices = isOnline ? voices.filter(item => item.Locale.match(/^(zh-|en-)/)) : voices.filter(item => item.lang.match(/^(zh-|en-)/));
+            voices = isOnline ? voices.filter(item => item.Locale.match(/^(ru-|en-|zh-)/)) : voices.filter(item => item.lang.match(/^(ru-|en-|zh-)/));
             if (isOnline) {
                 voices.map(item => {
                     item.name = item.FriendlyName || (`${item.DisplayName} Online (${item.VoiceType}) - ${item.LocaleName}`);
@@ -2179,13 +2180,13 @@
             }
             voices.sort((a, b) => {
                 if (a.lang.slice(0, 2) === b.lang.slice(0, 2)) {
-                    if (a.lang.slice(0, 2) === "zh") {
+                    if (a.lang.slice(0, 2) === "ru") {
                         return (a.lang === b.lang) ? 0 : (a.lang > b.lang) ? 1 : -1; // zh-CN 在前
                     } else {
                         return 0
                     }
                 }
-                return (locale === "zh" ? (a.lang < b.lang) : (a.lang > b.lang)) ? 1 : -1; // 中文UI，则中文"z"在前
+                return (locale === "ru" ? (a.lang < b.lang) : (a.lang > b.lang)) ? 1 : -1; // 中文UI，则中文"z"在前
             });
             voices.map(item => {
                 if (item.name.match(/^(Google |Microsoft )/)) {
